@@ -15,3 +15,5 @@ public class MainController extends HttpServlet {
         req.getRequestDispatcher("/main.jsp").forward(req, resp);
     }
 }
+
+// 서블릿 만들기
