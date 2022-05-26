@@ -8,17 +8,21 @@ public class Member {
     private String email;
     private int age;
     private Date regdate;
+    private String name;
+    private int age1;
 
     public Member() {
     }
 
-    public Member(String id, String pwd, String email, int age, Date regdate) {
+    public Member(String id, String pwd, String email, int age, Date regdate, String name, int age1) {
         super();
         this.id = id;
         this.pwd = pwd;
         this.email = email;
         this.age = age;
         this.regdate = regdate;
+        this.name = name;
+        this.age1 = age1;
     }
 
     public String getId() {
@@ -60,7 +64,5 @@ public class Member {
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
     }
-
-    // testests
 
 }
