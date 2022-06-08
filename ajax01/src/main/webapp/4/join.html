@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join.html</title>
+    <script type="text/javascript">
+        var xhr = null;
+        function idcheck() {
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=success;
+            let id = document.getElementById("id").value;
+            if(id==""){
+            	document.getElementById("idcheck").innerHTML="";
+            	return;
+            }
+            xhr.open('get', 'idcheck.jsp?id=' + id, true);
+            xhr.send();
+        }
+
+        function success() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = xhr.responseXML;
+                let xml =xhr.responseXML;
+                //let exist = data.getElementsByTagName("exist")[0].firstChild.nodeValue;
+                let exist = xml.getElementsByTagName("exist")[0].textContent;
+                let span = document.getElementById("idcheck");
+                if(exist=='true'){
+                span.innerHTML="사용중인 아이디입니다."
+                }else{
+                    span.innerHTML="사용가능한 아이디입니다."
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>회원가입</h1>
+<form method="post" action="join.jsp">
+    아이디 <input type="text" name="id" id="id" onkeyup="idcheck()">
+    <!-- 중복확인 버튼을 누르면 사용중인지 아닌지를 span#idcheck에 출력되도록 해보세요 -->
+    <!-- <input type="button" value="중복확인" onclick="idcheck()"> -->
+    <span id="idcheck"></span><br>
+    비밀번호 <input type="password" name="pwd"><br>
+    이메일 <input type="text" name="email"><br>
+    <input type="submit" value="가입">
+</form>
+</body>
+</html>

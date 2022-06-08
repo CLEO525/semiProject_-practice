@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>quiz.html</title>
+    <script type="text/javascript">
+        var xhr = null;
+        function findId() {
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=success;
+            let email = document.getElementById("email").value;
+            let pwd = document.getElementById("pwd").value;
+            if(email==""){
+                document.getElementById("result").innerHTML="";
+                return;
+            }
+            xhr.open('get', 'findid.jsp?email=' + email+'&pwd='+pwd, true);
+            xhr.send();
+        }
+
+        function success() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = xhr.responseXML;
+                let xml =xhr.responseXML;
+                //let exist = data.getElementsByTagName("exist")[0].firstChild.nodeValue;
+                let exist = xml.getElementsByTagName("exist")[0].textContent;
+                let id = xml.getElementsByTagName("id")[0].textContent;
+                let span = document.getElementById("result");
+                if(exist=='true'){
+                    span.innerHTML="아이디 : "+id;
+                }else{
+                    span.innerHTML="아이디가 존재하지 않습니다."
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<!--이메일과 비밀번호를 입력받아 해당 아이디 찾기를 구현해 보세요 -->
+<h1>아이디 찾기</h1>
+이메일 <input type="text" id="email"><br>
+비밀번호 <input type="password" id="pwd"><br>
+<input type="button" value="찾기" onclick="findId()">
+<div id="result"></div>
+</body>
+</html>

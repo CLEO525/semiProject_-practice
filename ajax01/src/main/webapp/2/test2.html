@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>test2.html</title>
+<script type="text/javascript">
+     var xhr = null;
+     function find(){
+         var id = document.getElementById("id").value;
+         xhr=new XMLHttpRequest();
+         xhr.onreadystatechange=callback;
+         xhr.open('get','findpwd.jsp?id=',id,true);
+         xhr.send();
+     }
+     function callback(){
+         if(xhr.readyState==4 && xhr.status==200){
+             //alert("success");
+             var data = xhr.responseXML;
+             var code=data.getElementsByTagName("code")[0].firstChild.nodeValue;
+             var div = document.getElementById("result");
+             if(code =='success'){
+                 var pwd = data.getElementsByTagName("pwd")[0].firstChild.nodeValue;
+                 div.innerHTML="비밀번호: "+pwd;
+             }else{
+                 div.innerHTML="해당 정보가 존재하지 않습니다."
+             }
+         }
+     }
+</script>
+</head>
+<body>
+<h1>비밀번호 찾기</h1>
+아이디 <input type="text" name="id" id="id"><br>
+<input type="button" value="찾기" onclick="find()">
+<div id="result"></div>
+</body>
+</html>

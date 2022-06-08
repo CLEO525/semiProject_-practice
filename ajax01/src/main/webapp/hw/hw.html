@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript">
+        var xhr = null;
+
+        window.onload = getData();
+
+        function getData() {
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=success;
+            xhr.open('get', 'getData.jsp', true);
+            xhr.send();
+        }
+        function success() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let xml =xhr.responseXML;
+                let div = document.getElementsByTagName("div")[0];
+                for(let i=0; i < 5; i++){
+                    let members = document.createElement("div");    
+                    members.innerHTML=xml.getElementsByTagName("id")[i].textContent;
+                    members.id ="members";
+                    div.appendChild(members);
+      
+                    let memberinfo = document.createElement("div");
+                    memberinfo.id ="memberinfo"+i;
+                    members.appendChild(memberinfo);
+                                        
+                    let id = xml.getElementsByTagName("id")[i].textContent;
+                    let pwd = xml.getElementsByTagName("pwd")[i].textContent;
+                    let email = xml.getElementsByTagName("email")[i].textContent;
+                    
+                    memberinfo.innerHTML="아이디: "+id+"<br>비밀번호: "+pwd+"<br>이메일: "+ email;
+                    memberinfo.style.width ='250px';
+                    memberinfo.style.height= '150px';
+                    memberinfo.style.backgroundColor='yellow';
+                    memberinfo.style.position= 'absolute';
+                    memberinfo.style.left= '100px';
+                    
+                    memberinfo.style.display= 'none';
+                    memberinfo.style.boxSizing= 'border-box';
+                    members.onmouseover=showData;
+                    members.onmouseleave=hideData;
+                    
+                    function showData(){
+                        let memberinfo = document.getElementById("memberinfo"+i);
+                        memberinfo.style.display = 'block';
+
+                    }
+                    
+                    function hideData(){
+                    	let memberinfo = document.getElementById("memberinfo"+i);
+                    	memberinfo.style.display = 'none'
+                    }
+
+                }
+
+            }
+        }     
+    </script>
+    <style>
+    div#wrap {
+            width: 1000px;
+            height: auto;
+            display: inline;
+        }
+    
+        div#members {
+            width: 300px;
+            height: 150px;
+            margin-left: 30px;
+            margin-bottom: 5px;
+            background-color: pink;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<div id= wrap>
+</div>
+</body>
+</html>
